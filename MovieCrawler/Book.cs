@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 namespace MovieCrawler
 {
-    internal class Book
+    public class Book
     {
         public string Name { get; set; }
         public string DownloadUrl { get; set; }
@@ -16,7 +16,7 @@ namespace MovieCrawler
 
         public override string ToString()
         {
-            return $"{Name},{DownloadUrl},{EditTime},{Size}";
+            return $"{Name},{EditTime},{Size},{DownloadUrl}";
         }
     }
 }
