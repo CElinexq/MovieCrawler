@@ -11,4 +11,10 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.46" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Program.cs">
+      <CustomToolNamespace>Practice</CustomToolNamespace>
+    </Compile>
+  </ItemGroup>
+
 </Project>

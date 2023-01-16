@@ -1,22 +1,46 @@
-﻿
+﻿using BookCrawlerNoSubpage;
 using HtmlAgilityPack;
+using log4net;
+using log4net.Repository.Hierarchy;
 using System;
+using System.Configuration;
+using System.Diagnostics;
 using System.Xml.Linq;
-using MovieCrawler;
 
 
-string rootUrl = @"https://pity.eu.org/SP2/doc/%E6%BC%AB%E7%94%BB/250%E9%83%A8%E7%83%AD%E6%92%AD%E6%BC%AB%E7%94%BB/jojo/";
+//声明一个log4net对象
+ILog logger = LogManager.GetLogger(typeof(Program));
+log4net.Config.XmlConfigurator.Configure();
+//记录花费时间
+Stopwatch stopWatch = Stopwatch.StartNew();
+//在方法2中记录每条信息
+int index1 = 0;
+//从配置文件App.config中获取value值，即下载地址
+string rootUrl = ConfigurationManager.AppSettings["url"];
+
+//声明一个httpClient对象，目的向网页发送http请求
 var httpClient = new HttpClient();
-//桌面文件夹 写入csv文件夹路径
-string outputFilePath = @"C:\Users\cocox\Desktop\悦享云盘-Books.csv";
-//写入csv文件首行信息
+//在exe执行根目录中，写入csv文件，outputFilePath是相对路径
+string outputFilePath = $"悦享云盘-Books {DateTime.Now.ToString("yyyy-MM-dd HH#mm#ss")}.csv";
+//向csv文件中，写入首行信息
 File.WriteAllText(outputFilePath, "Name,EditTime,Size,DownloadUrl" + Environment.NewLine);
-List<string> folderUrls = await GetFinalFolderUrl(rootUrl);
-//folderUrls.ForEach(x => Console.WriteLine(x)); 
+
+//调用自定义方法：边找文件夹，边写出书籍信息
+try
+{
+    List<string> folderUrls = await GetFinalFolderUrl(rootUrl);
+}
+catch (Exception e)
+{
+    //用log4net记录异常信息
+    logger.Error("异常 ", e);
+}
+//用log4net记录信息
+logger.Info("总时长 " + stopWatch.Elapsed);
 Console.WriteLine("写入结束！");
 
 
-///获取首页和分页所有文件夹路径，即文件路径
+///方法1：获取首页和分页所有文件夹路径，即文件路径
 async Task<List<string>> GetFolderUrlFromDoc(string url)
 {
     List<string> folderUrlList = new List<string>();
@@ -26,20 +50,20 @@ async Task<List<string>> GetFolderUrlFromDoc(string url)
     doc.LoadHtml(html);
 
     //获取首页文件夹路径
-    var mainPageUrl=await GetFolderUrlFromPage(url, doc);
+    var mainPageUrl = await GetFolderUrlFromPage(url, doc);
     folderUrlList.AddRange(mainPageUrl);
 
     //判断是否存在分页
     var pageNode = doc.DocumentNode.SelectSingleNode("//*[@id='nextpageform']");
     //如果存在分页，找到总页数
-    if (pageNode!=null)
+    if (pageNode != null)
     {
         //通过td获取总页数pageNumAll：第二个td；只获取td的子元素节点（排除文本节点）
         var tdNode = pageNode.Descendants("td").ToArray()[1];
         var pageNumAll = tdNode.ChildNodes.Where(x => x.NodeType == HtmlNodeType.Element).Count();
         //获取第2,3页的html
-        for (int i = 2 ; i <= pageNumAll; i++)
-        {           
+        for (int i = 2; i <= pageNumAll; i++)
+        {
             //根据js发送的post请求，获取第i页的html
             List<KeyValuePair<string, string>> keyValuePairs = new List<KeyValuePair<string, string>>();
             keyValuePairs.Add(new KeyValuePair<string, string>("pagenum", i.ToString()));
@@ -50,15 +74,15 @@ async Task<List<string>> GetFolderUrlFromDoc(string url)
             doc.LoadHtml(responseContent);
             //获取分页的文件夹路径
             var subPageUrl = await GetFolderUrlFromPage(url, doc);
-            folderUrlList.AddRange(subPageUrl);          
-        }       
+            folderUrlList.AddRange(subPageUrl);
+        }
     }
     return folderUrlList;
 }
 
-///方法2：GetBookInfoFromFolderUrl：通过文件夹路径，获取当前页面里的所有书籍信息，返回当前页面所有书籍的list
+///方法2-1辅助方法2：GetBookInfoFromFolderUrl：通过文件夹路径，获取当前页面里的所有书籍信息，返回当前页面所有书籍的list
 void GetBookInfoFromFolderUrl(string folderUrl, HtmlDocument bookDoc)
-{   
+{
     // 使用 XPath 表达式来提取电影名称
     HtmlNodeCollection nodes = bookDoc.DocumentNode.SelectNodes("//*[@name='filelist']");
     List<Book> bookList = new List<Book>();
@@ -90,9 +114,14 @@ void GetBookInfoFromFolderUrl(string folderUrl, HtmlDocument bookDoc)
     }
 }
 
-///获取首页或者分页的文件夹路径
+///方法2：获取首页或者分页的文件夹路径
+
 async Task<List<string>> GetFolderUrlFromPage(string url, HtmlDocument doc)
 {
+    index1++;
+    //logger.Info在log文件里写入
+    logger.Info($"正在尝试解析第{index1}条 " + url);
+    Console.WriteLine($"正在尝试解析第{index1}条 " + url);
     List<string> folderUrlList = new List<string>();
     var folderNodes = doc.DocumentNode.SelectNodes("//*[@name='folderlist']");
     //查找href
@@ -102,21 +131,22 @@ async Task<List<string>> GetFolderUrlFromPage(string url, HtmlDocument doc)
         {
             var href = node.Attributes["href"].Value;
             var newLink = Path.Combine(url, href);
-            folderUrlList.Add(newLink);            
+            folderUrlList.Add(newLink);
             //获得新文件夹的url路径，同时读取其内部文件信息
-            GetBookInfoFromFolderUrl(newLink, doc);            
+            GetBookInfoFromFolderUrl(newLink, doc);
         }
     }
     else
     {
+        //如果folderNodes为null,根据原来url读取书籍信息
         GetBookInfoFromFolderUrl(url, doc);
     }
     //如果folderNodes为null, 没有任何操作，仍返回原来创建的folderUrlList
-    return folderUrlList;    
+    return folderUrlList;
 }
 
 
-///获取所有最终文件夹路径
+///方法3：获取所有最终文件夹路径
 async Task<List<string>> GetFinalFolderUrl(string url)
 {
     List<string> folderUrlList = new List<string>();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace MovieCrawler
+namespace BookCrawlerNoSubpage
 {
     public class Book
     {
@@ -12,7 +12,7 @@ namespace MovieCrawler
         public string DownloadUrl { get; set; }
         public DateTime EditTime { get; set; }
         public string Size { get; set; }
-        
+
 
         public override string ToString()
         {

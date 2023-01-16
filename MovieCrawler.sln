@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MovieCrawler", "MovieCrawler\MovieCrawler.csproj", "{2327E101-DBE9-4054-8BAC-52F7D335B96C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadingFolder", "LoadingFolder\LoadingFolder.csproj", "{72EC1758-2C90-46AA-A6CA-37ECC420D7F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoadingFolder", "LoadingFolder\LoadingFolder.csproj", "{72EC1758-2C90-46AA-A6CA-37ECC420D7F5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCrawler", "PageForm\BookCrawler.csproj", "{7ED99373-AAA6-4C67-92E9-8688F4CDC19D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PageForm", "PageForm\PageForm.csproj", "{7ED99373-AAA6-4C67-92E9-8688F4CDC19D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pracitce", "Pracitce\Pracitce.csproj", "{AFCD3BA4-10D1-48B2-8A37-F5EB0C4F4E33}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Pracitce", "Pracitce\Pracitce.csproj", "{AFCD3BA4-10D1-48B2-8A37-F5EB0C4F4E33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCrawlerNoSubpage", "BookCrawlerNoSubpage\BookCrawlerNoSubpage.csproj", "{87EAAD2C-E51E-433C-B89E-75A58956B19E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2327E101-DBE9-4054-8BAC-52F7D335B96C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2327E101-DBE9-4054-8BAC-52F7D335B96C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2327E101-DBE9-4054-8BAC-52F7D335B96C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2327E101-DBE9-4054-8BAC-52F7D335B96C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72EC1758-2C90-46AA-A6CA-37ECC420D7F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{72EC1758-2C90-46AA-A6CA-37ECC420D7F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72EC1758-2C90-46AA-A6CA-37ECC420D7F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{AFCD3BA4-10D1-48B2-8A37-F5EB0C4F4E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AFCD3BA4-10D1-48B2-8A37-F5EB0C4F4E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AFCD3BA4-10D1-48B2-8A37-F5EB0C4F4E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87EAAD2C-E51E-433C-B89E-75A58956B19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87EAAD2C-E51E-433C-B89E-75A58956B19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87EAAD2C-E51E-433C-B89E-75A58956B19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87EAAD2C-E51E-433C-B89E-75A58956B19E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

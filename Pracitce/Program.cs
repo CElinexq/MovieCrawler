@@ -2,6 +2,8 @@
 using System.Xml.Linq;
 
 
+
+
 string rootUrl = @"https://pity.eu.org/SP2/doc/%E6%BC%AB%E7%94%BB/500%E5%A5%97%E8%BF%9E%E7%8E%AF%E7%94%BB%E5%90%88%E9%9B%86/";
 var httpClient = new HttpClient();
 string html = await httpClient.GetStringAsync(rootUrl);
