@@ -115,7 +115,6 @@ void GetBookInfoFromFolderUrl(string folderUrl, HtmlDocument bookDoc)
 }
 
 ///方法2：获取首页或者分页的文件夹路径
-
 async Task<List<string>> GetFolderUrlFromPage(string url, HtmlDocument doc)
 {
     index1++;
