@@ -5,7 +5,7 @@ VisualStudioVersion = 17.4.33110.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LoadingFolder", "LoadingFolder\LoadingFolder.csproj", "{72EC1758-2C90-46AA-A6CA-37ECC420D7F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Pracitce", "Pracitce\Pracitce.csproj", "{AFCD3BA4-10D1-48B2-8A37-F5EB0C4F4E33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChangeComma", "Pracitce\ChangeComma.csproj", "{AFCD3BA4-10D1-48B2-8A37-F5EB0C4F4E33}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookCrawlerNoSubpage", "BookCrawlerNoSubpage\BookCrawlerNoSubpage.csproj", "{87EAAD2C-E51E-433C-B89E-75A58956B19E}"
 EndProject
